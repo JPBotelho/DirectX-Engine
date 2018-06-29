@@ -15,6 +15,7 @@
 #include "LogManager.h"
 #include "ModelClass.h"
 #include "Camera.h"
+#include <DirectXMath.h>
 
 LogManager *logger = new LogManager();
 
@@ -63,7 +64,6 @@ struct CameraConstants {
 
 CameraConstants constants;
 
-Camera* camera = new Camera;
 
 GraphicsManager::GraphicsManager(float x, float y)
 {
@@ -197,9 +197,9 @@ void GraphicsManager::RenderFrame()
 	//UpdateConstBuffer();
 	devcon->ClearRenderTargetView(backbuffer, D3DXCOLOR(0, 0, 0, 0));
 
-	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	devcon->Draw(6, 0);
+	devcon->Draw(4, 0);
 
 	swapchain->Present(0, 0);
 }
@@ -240,17 +240,21 @@ HRESULT GraphicsManager::InitShaders(bool clearLog)
 
 HRESULT GraphicsManager::CreateConstBuffer()
 {
+	static_assert (sizeof(CameraConstants) % 16 == 0, "Size is not correct");
+	Camera* camera = new Camera();
+
 	D3DXMATRIX worldMatrix, viewMatrix, projMatrix;
 
 	camera->GetProjectionMatrix(&projMatrix);
 	camera->GetViewMatrix(&viewMatrix);
 	camera->GetWorldMatrix(&worldMatrix);
-	D3DXMatrixTranspose(&worldMatrix, &worldMatrix);
-	D3DXMatrixTranspose(&viewMatrix, &viewMatrix);
-	D3DXMatrixTranspose(&projMatrix, &projMatrix);
+	//D3DXMatrixTranspose(&worldMatrix, &worldMatrix);
+	//D3DXMatrixTranspose(&viewMatrix, &viewMatrix);
+	//D3DXMatrixTranspose(&projMatrix, &projMatrix);
 	constants.projectionMatrix = projMatrix;
 	constants.viewMatrix = viewMatrix;
 	constants.worldMatrix = worldMatrix;
+
 
 
 	D3D11_BUFFER_DESC cbDesc;

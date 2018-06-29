@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "Camera.h"
 
+
 Camera::Camera()
 {
 	position.x = 0.0;
 	position.y = 0.0;	
-	position.z = -1.0;
+	position.z = 0.0;
 	rotation.x = 0.0;
 	rotation.y = 0.0;
 	rotation.z = 0.0;
@@ -16,12 +17,19 @@ Camera::~Camera()
 {
 }
 
-void Camera::GetViewMatrix(D3DXMATRIX* viewMatrix)
+D3DXMATRIX Camera::GetViewMatrix(D3DXMATRIX* viewMatrix)
 {
 	D3DXVECTOR3 up, position, lookAt;
 	float yaw, pitch, roll;
 	D3DXMATRIX rotationMatrix;
 
+	return D3DXMATRIX(1.0, 0.0, 0.0, 0.0, 
+									0.0, 1.0, 0.0, 0.0, 
+									0.0, 0.0, 1.0, -1.0, 
+									0.0, 0.0, 0.0, 1.0);
+
+	viewMatrix = m;
+	return;
 
 	// Setup the vector that points upwards.
 	up.x = 0.0f;
@@ -32,6 +40,8 @@ void Camera::GetViewMatrix(D3DXMATRIX* viewMatrix)
 	lookAt.x = 0.0f;
 	lookAt.y = 0.0f;
 	lookAt.z = 1.0f;
+
+	D3DXVec3Cross(&up, &lookAt, &D3DXVECTOR3(1, 0, 0));
 
 	// Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.
 	pitch = rotation.x * 0.0174532925f;
@@ -55,15 +65,15 @@ void Camera::GetViewMatrix(D3DXMATRIX* viewMatrix)
 
 void Camera::GetProjectionMatrix(D3DXMATRIX* projMatrix)
 {
-	float fieldOfView = (float)D3DX_PI / 4.0f;
-	float screenAspect = (float)1920 / (float)1080;
+	float fieldOfView = 45 * 0.0174532925f;// (float)D3DX_PI / 4.0f;
+	float screenAspect = (float)16.0 / (float)9.0;
 
-	D3DXMatrixPerspectiveFovLH(projMatrix, fieldOfView, screenAspect, .1, 10);
+	D3DXMatrixPerspectiveFovLH(projMatrix, fieldOfView, screenAspect, .1, 1000);
 }
 
 void Camera::GetOrthoMatrix(D3DXMATRIX* orthoMatrix)
 {
-	D3DXMatrixOrthoLH(orthoMatrix, (float)1920, (float)1080, .1, 10);
+	D3DXMatrixOrthoLH(orthoMatrix, (float)1920, (float)1080, .1, 1000);
 }
 
 void Camera::GetWorldMatrix(D3DXMATRIX* worldMatrix)

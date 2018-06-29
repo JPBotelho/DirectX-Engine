@@ -17,7 +17,7 @@ VOut VShader(float4 position : POSITION, float4 color : COLOR)
 {
     VOut output;
 	position.w = 1;
-	//output.position = mul(position, worldMatrix);
+	output.position = mul(position, worldMatrix);
     output.position = mul(position, viewMatrix);
     output.position = mul(output.position, projectionMatrix);
 	//output.position = position;
@@ -29,7 +29,7 @@ VOut VShader(float4 position : POSITION, float4 color : COLOR)
 }
 
 
-float3 PShader(VOut input) : SV_TARGET
+float4 PShader(VOut input) : SV_TARGET
 {
     return 1;
 }
