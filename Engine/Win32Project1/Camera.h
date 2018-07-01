@@ -7,7 +7,7 @@ class Camera
 public:
 	Camera();
 	~Camera();
-	void GetViewMatrix(D3DXMATRIX*);
+	D3DXMATRIX GetViewMatrix();
 	void GetProjectionMatrix(D3DXMATRIX*);
 	void GetWorldMatrix(D3DXMATRIX*);
 	void GetOrthoMatrix(D3DXMATRIX*);

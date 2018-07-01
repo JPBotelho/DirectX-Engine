@@ -16,6 +16,7 @@
 #include "ModelClass.h"
 #include "Camera.h"
 #include <DirectXMath.h>
+#include <D3DCompiler.h>
 
 LogManager *logger = new LogManager();
 
@@ -57,12 +58,13 @@ __declspec(align(16))
 struct CameraConstants {
 	float dTime;
 	float time;
-	D3DXMATRIX worldMatrix;
-	D3DXMATRIX viewMatrix;
+	float pad[2];
 	D3DXMATRIX projectionMatrix;
 };
 
 CameraConstants constants;
+Camera* camera = new Camera();
+D3DXMATRIX projMatrix;
 
 
 GraphicsManager::GraphicsManager(float x, float y)
@@ -194,7 +196,7 @@ void GraphicsManager::EndD3D()
 
 void GraphicsManager::RenderFrame()
 {
-	//UpdateConstBuffer();
+	UpdateConstBuffer();
 	devcon->ClearRenderTargetView(backbuffer, D3DXCOLOR(0, 0, 0, 0));
 
 	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -211,8 +213,8 @@ HRESULT GraphicsManager::InitShaders(bool clearLog)
 	logger->Append("Compiling shaders...\n");
 
 	ID3D10Blob *VS, *PS;
-	D3DX11CompileFromFile(L"shaders.shader", 0, 0, "VShader", "vs_4_0", 0, 0, 0, &VS, &vertLog, 0);
-	D3DX11CompileFromFile(L"shaders.shader", 0, 0, "PShader", "ps_4_0", 0, 0, 0, &PS, &pixelLog, 0);
+	D3DX11CompileFromFile(L"shaders.shader", 0, 0, "VShader", "vs_4_0", D3D10_SHADER_DEBUG, 0, 0, &VS, &vertLog, 0);
+	D3DX11CompileFromFile(L"shaders.shader", 0, 0, "PShader", "ps_4_0", D3D10_SHADER_DEBUG, 0, 0, &PS, &pixelLog, 0);
 	
 	if (vertLog != nullptr || pixelLog != nullptr)
 	{
@@ -241,19 +243,16 @@ HRESULT GraphicsManager::InitShaders(bool clearLog)
 HRESULT GraphicsManager::CreateConstBuffer()
 {
 	static_assert (sizeof(CameraConstants) % 16 == 0, "Size is not correct");
-	Camera* camera = new Camera();
-
-	D3DXMATRIX worldMatrix, viewMatrix, projMatrix;
-
-	camera->GetProjectionMatrix(&projMatrix);
-	camera->GetViewMatrix(&viewMatrix);
-	camera->GetWorldMatrix(&worldMatrix);
-	//D3DXMatrixTranspose(&worldMatrix, &worldMatrix);
-	//D3DXMatrixTranspose(&viewMatrix, &viewMatrix);
-	//D3DXMatrixTranspose(&projMatrix, &projMatrix);
-	constants.projectionMatrix = projMatrix;
-	constants.viewMatrix = viewMatrix;
-	constants.worldMatrix = worldMatrix;
+	
+	D3DXMATRIX matrixproj =
+	{
+		1.35799f, 0, 0, 0,
+		0, 2.41421342f, 0, 0,
+		0, 0, 1.00010002f, -0.10001f,
+		0, 0, 1, 0
+	};
+	D3DXMatrixTranspose(&matrixproj, &matrixproj);
+	constants.projectionMatrix = matrixproj;
 
 
 
@@ -284,8 +283,24 @@ HRESULT GraphicsManager::CreateConstBuffer()
 
 void GraphicsManager::UpdateConstBuffer()
 {
-	constants.dTime = deltaTime;
-	constants.time = timeElapsed;
+	constants.dTime = 100;
+	constants.time = 100;
+
+	/*D3DXMATRIX m = camera->GetProjectionMatrix();
+	D3DXMatrixTranspose(&m, &m);
+	constants.projectionMatrix = m;*/
+
+	D3DXMATRIX matrixproj =
+	{
+		1.35799f, 0, 0, 0,
+		0, 2.41421342f, 0, 0,
+		0, 0, 1.00010002f, -0.10001f,
+		0, 0, 1, 0
+	};
+	D3DXMatrixTranspose(&matrixproj, &matrixproj);
+	constants.projectionMatrix = D3DXMATRIX(matrixproj);
+
+
 
 	D3D11_MAPPED_SUBRESOURCE resource;
 	devcon->Map(constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
