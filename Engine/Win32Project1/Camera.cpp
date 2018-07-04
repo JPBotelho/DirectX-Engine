@@ -1,12 +1,15 @@
 #include "stdafx.h"
 #include "Camera.h"
+#include <d3d11.h>
+#include <d3dx10math.h>
 
 
 Camera::Camera()
 {
-	position.x = 0.0;
+	position.x = 1.0;
 	position.y = 0.0;	
-	position.z = 0.0;
+	position.z = -1.0;
+
 	rotation.x = 0.0;
 	rotation.y = 0.0;
 	rotation.z = 0.0;
@@ -19,7 +22,7 @@ Camera::~Camera()
 
 void Camera::GetViewMatrix(D3DXMATRIX* viewMatrix)
 {
-	D3DXVECTOR3 up, position, lookAt;
+	D3DXVECTOR3 up, pos, lookAt;
 	float yaw, pitch, roll;
 	D3DXMATRIX rotationMatrix;
 
@@ -30,9 +33,9 @@ void Camera::GetViewMatrix(D3DXMATRIX* viewMatrix)
 	up.z = 0.0f;
 
 	// Setup the position of the camera in the world.
-	position.x = position.x;
-	position.y = position.y;
-	position.z = position.z;
+	pos.x = position.x;
+	pos.y = position.y;
+	pos.z = position.z;
 
 	// Setup where the camera is looking by default.
 	lookAt.x = 0.0f;
@@ -52,10 +55,10 @@ void Camera::GetViewMatrix(D3DXMATRIX* viewMatrix)
 	D3DXVec3TransformCoord(&up, &up, &rotationMatrix);
 
 	// Translate the rotated camera position to the location of the viewer.
-	lookAt = position + lookAt;
+	lookAt = pos + lookAt;
 
 	// Finally create the view matrix from the three updated vectors.
-	D3DXMatrixLookAtLH(viewMatrix, &position, &lookAt, &up);
+	D3DXMatrixLookAtLH(viewMatrix, &pos, &lookAt, &up);
 
 }
 

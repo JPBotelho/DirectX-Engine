@@ -25,9 +25,9 @@ HRESULT ModelClass::InitializeVertexBuffer(ID3D11Device* dev, ID3D11DeviceContex
 {
 	Vertex triVerts[] =
 	{
-		{ D3DXVECTOR3(.2, .1, 2.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ D3DXVECTOR3(0.5, .3, 2.0f), D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ D3DXVECTOR3(.5, .1, 2.0f), D3DXCOLOR(0.0f, 1.0f, 1.0f, 1.0f) }
+		{ D3DXVECTOR3(-1, -1, 2.0f), D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f) },
+		{ D3DXVECTOR3(0, 1, 2.0f), D3DXCOLOR(0.5f, 0.0f, 0.0f, 1.0f) },
+		{ D3DXVECTOR3(1, -1, 2.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f) }
 	};
 
 	D3D11_BUFFER_DESC bd;

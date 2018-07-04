@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "GraphicsManager.h"
 #include "WindowManager.h"
+#include "LogManager.h"
+#include "ModelClass.h"
+#include "Camera.h"
+#include "TextureLoader.h"
+
 
 #include <d3d11.h>
 #include <d3dx11.h>
@@ -10,13 +15,11 @@
 #pragma comment (lib, "d3dx11.lib")
 #pragma comment (lib, "d3dx10.lib")
 
-#include <iostream>
-#include <fstream>
-#include "LogManager.h"
-#include "ModelClass.h"
-#include "Camera.h"
-#include <DirectXMath.h>
+
 #include <D3DCompiler.h>
+
+
+
 
 LogManager *logger = new LogManager();
 
@@ -46,6 +49,7 @@ ID3D11InputLayout *pLayout;
 ID3D10Blob *vertLog = nullptr;
 ID3D10Blob *pixelLog = nullptr;
 
+ID3D11ShaderResourceView* texture = 0;
 
 D3D11_INPUT_ELEMENT_DESC ied[] =
 {
@@ -64,7 +68,7 @@ struct CameraConstants {
 
 CameraConstants constants;
 Camera* camera = new Camera();
-D3DXMATRIX projMatrix;
+D3DXMATRIX projMatrix, viewMatrix, worldMatrix;
 
 
 GraphicsManager::GraphicsManager(float x, float y)
@@ -77,6 +81,8 @@ GraphicsManager::GraphicsManager(float x, float y)
 GraphicsManager::~GraphicsManager()
 {
 }
+
+#pragma region Initialize
 
 HRESULT GraphicsManager::InitializeGraphics(HWND hWnd)
 {
@@ -104,6 +110,13 @@ HRESULT GraphicsManager::InitializeGraphics(HWND hWnd)
 	{
 		return action;
 	}
+
+	action = SetTexture();
+	if (FAILED(action))
+	{
+		return action;
+	}
+
 	return action;
 }
 
@@ -181,31 +194,6 @@ HRESULT GraphicsManager::InitD3D(HWND hWnd)
 	return S_OK;
 }
 
-void GraphicsManager::EndD3D()
-{
-	swapchain->SetFullscreenState(FALSE, NULL);
-	swapchain->Release();
-	backbuffer->Release();
-	dev->Release();
-	devcon->Release();
-	vertShader->Release();
-	pixelShader->Release();
-	//constBuffer->Release();
-	//vertBuffer->Release();
-}
-
-void GraphicsManager::RenderFrame()
-{
-	UpdateConstBuffer();
-	devcon->ClearRenderTargetView(backbuffer, D3DXCOLOR(0, 0, 0, 0));
-
-	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	devcon->Draw(4, 0);
-
-	swapchain->Present(0, 0);
-}
-
 HRESULT GraphicsManager::InitShaders(bool clearLog)
 {
 	if (clearLog)
@@ -240,21 +228,97 @@ HRESULT GraphicsManager::InitShaders(bool clearLog)
 	return S_OK;
 }
 
+#pragma endregion Initialize
+
+void GraphicsManager::RenderFrame()
+{
+	UpdateConstBuffer();
+	devcon->ClearRenderTargetView(backbuffer, D3DXCOLOR(255, 0, 238, 0));
+
+	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	devcon->Draw(4, 0);
+
+	//Present(0,0) for no VSync
+	swapchain->Present(1, 0);
+}
+
+void GraphicsManager::EndD3D()
+{
+	swapchain->SetFullscreenState(FALSE, NULL);
+	swapchain->Release();
+	backbuffer->Release();
+	dev->Release();
+	devcon->Release();
+	vertShader->Release();
+	pixelShader->Release();
+	if(texture != nullptr)
+		texture->Release();
+	if(vertLog != nullptr)
+		vertLog->Release();
+	if(pixelLog != nullptr)
+		pixelLog->Release();
+	if(pLayout != nullptr)
+		pLayout->Release();
+}
+
+#pragma region Constants
+
+HRESULT GraphicsManager::SetTexture()
+{
+	TextureLoader* t = new TextureLoader();
+	HRESULT action = t->LoadTexture(L"seafloor.dds", dev, &texture);
+
+	if (FAILED(action))
+	{
+		logger->Append("\n Texture not found!");
+		return action;
+	}
+
+	ID3D11SamplerState* sampleState;
+	D3D11_SAMPLER_DESC samplerDesc;
+
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0;
+	samplerDesc.BorderColor[1] = 0;
+	samplerDesc.BorderColor[2] = 0;
+	samplerDesc.BorderColor[3] = 0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	action = dev->CreateSamplerState(&samplerDesc, &sampleState);
+	if (FAILED(action))
+	{
+		logger->Append("\n Texture not found!");
+		return action;
+	}
+
+	devcon->PSSetShaderResources(0, 1, &texture);
+	devcon->PSSetSamplers(0, 1, &sampleState);
+
+	return action;
+}
+
 HRESULT GraphicsManager::CreateConstBuffer()
 {
 	static_assert (sizeof(CameraConstants) % 16 == 0, "Size is not correct");
 	
-	D3DXMATRIX matrixproj =
-	{
-		1.35799f, 0, 0, 0,
-		0, 2.41421342f, 0, 0,
-		0, 0, 1.00010002f, -0.10001f,
-		0, 0, 1, 0
-	};
-	D3DXMatrixTranspose(&matrixproj, &matrixproj);
-	constants.projectionMatrix = matrixproj;
+	camera->GetProjectionMatrix(&projMatrix);
+	camera->GetViewMatrix(&viewMatrix);
+	camera->GetWorldMatrix(&worldMatrix);
 
+	worldMatrix *= viewMatrix;
+	worldMatrix *= projMatrix;
 
+	constants.projectionMatrix = worldMatrix;
 
 	D3D11_BUFFER_DESC cbDesc;
 
@@ -276,7 +340,7 @@ HRESULT GraphicsManager::CreateConstBuffer()
 		logger->Append("\nERROR: Creating constant buffer failed." );
 	}
 	devcon->VSSetConstantBuffers(0, 1, &constBuffer);
-	devcon->PSSetConstantBuffers(0, 1, &constBuffer);
+	//devcon->PSSetConstantBuffers(0, 1, &constBuffer);
 
 	return res;
 }
@@ -286,20 +350,13 @@ void GraphicsManager::UpdateConstBuffer()
 	constants.dTime = 100;
 	constants.time = 100;
 
-	/*D3DXMATRIX m = camera->GetProjectionMatrix();
-	D3DXMatrixTranspose(&m, &m);
-	constants.projectionMatrix = m;*/
+	camera->GetProjectionMatrix(&projMatrix);
+	camera->GetViewMatrix(&viewMatrix);
+	camera->GetWorldMatrix(&worldMatrix);
+	worldMatrix *= viewMatrix;
+	worldMatrix *= projMatrix;
 
-	D3DXMATRIX matrixproj =
-	{
-		1.35799f, 0, 0, 0,
-		0, 2.41421342f, 0, 0,
-		0, 0, 1.00010002f, -0.10001f,
-		0, 0, 1, 0
-	};
-	D3DXMatrixTranspose(&matrixproj, &matrixproj);
-	constants.projectionMatrix = D3DXMATRIX(matrixproj);
-
+	constants.projectionMatrix = worldMatrix;
 
 
 	D3D11_MAPPED_SUBRESOURCE resource;
@@ -307,3 +364,5 @@ void GraphicsManager::UpdateConstBuffer()
 	memcpy(resource.pData, &constants, sizeof(constants));
 	devcon->Unmap(constBuffer, 0);
 }
+
+#pragma endregion Constants

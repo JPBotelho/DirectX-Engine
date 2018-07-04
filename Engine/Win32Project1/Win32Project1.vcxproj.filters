@@ -9,13 +9,19 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{286664ba-96e7-47fd-8ffd-f7dc555f3c31}</UniqueIdentifier>
+      <Extensions>.shader</Extensions>
+    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{286664ba-96e7-47fd-8ffd-f7dc555f3c31}</UniqueIdentifier>
-      <Extensions>.shader</Extensions>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{9801f216-972d-4ff1-a9bd-d6c21f5a1708}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture Loading">
+      <UniqueIdentifier>{61bd6935-ce04-4107-b487-be34ff1666f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -25,15 +31,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Win32Project1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -52,11 +49,14 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Win32Project1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,23 +75,24 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Win32Project1.rc">
+    <ClCompile Include="stdafx.cpp">
       <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Win32Project1.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
+    </ClCompile>
+    <ClCompile Include="TextureLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders.shader">
       <Filter>Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="texture.png">
+      <Filter>Texture Loading</Filter>
+    </Image>
+    <Image Include="seafloor.dds">
+      <Filter>Texture Loading</Filter>
+    </Image>
   </ItemGroup>
 </Project>

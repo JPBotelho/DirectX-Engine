@@ -1,4 +1,13 @@
 #pragma once
+#include <Windows.Foundation.h>
+#include <wrl\wrappers\corewrappers.h>
+#include <wrl\client.h>
+#include <stdio.h>
+
+using namespace ABI::Windows::Foundation;
+using namespace Microsoft::WRL;
+using namespace Microsoft::WRL::Wrappers;
+
 class GraphicsManager
 {
 	public:
@@ -9,8 +18,8 @@ class GraphicsManager
 		void EndD3D();
 		void RenderFrame();
 		HRESULT InitShaders(bool clearLog);
-		HRESULT CreateVertBuffer();
 		HRESULT CreateConstBuffer();
+		HRESULT SetTexture();
 		void UpdateConstBuffer();
 		float deltaTime;
 		float timeElapsed;

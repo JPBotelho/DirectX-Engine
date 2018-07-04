@@ -1,18 +1,23 @@
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.pch
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\vc140.pdb
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\vc140.idb
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\stdafx.obj
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.obj
-c:\users\brigh\documents\visual studio 2015\projects\engine\debug\win32project1.ilk
-c:\users\brigh\documents\visual studio 2015\projects\engine\debug\win32project1.exe
-c:\users\brigh\documents\visual studio 2015\projects\engine\debug\win32project1.pdb
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.res
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.tlog\cl.command.1.tlog
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.tlog\cl.read.1.tlog
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.tlog\cl.write.1.tlog
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.tlog\link.command.1.tlog
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.tlog\link.read.1.tlog
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.tlog\link.write.1.tlog
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.tlog\rc.command.1.tlog
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.tlog\rc.read.1.tlog
-c:\users\brigh\documents\visual studio 2015\projects\engine\win32project1\debug\win32project1.tlog\rc.write.1.tlog
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.pch
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\vc141.pdb
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\vc141.idb
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\stdafx.obj
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\windowmanager.obj
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.obj
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\modelclass.obj
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\logmanager.obj
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\graphicsmanager.obj
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\camera.obj
+c:\users\brigh\documents\github\local-peanut-engine\engine\debug\win32project1.exe
+c:\users\brigh\documents\github\local-peanut-engine\engine\debug\win32project1.ilk
+c:\users\brigh\documents\github\local-peanut-engine\engine\debug\win32project1.pdb
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.res
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.tlog\cl.command.1.tlog
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.tlog\cl.read.1.tlog
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.tlog\cl.write.1.tlog
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.tlog\link.command.1.tlog
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.tlog\link.read.1.tlog
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.tlog\link.write.1.tlog
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.tlog\rc.command.1.tlog
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.tlog\rc.read.1.tlog
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\debug\win32project1.tlog\rc.write.1.tlog

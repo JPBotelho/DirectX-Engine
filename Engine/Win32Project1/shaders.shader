@@ -5,6 +5,9 @@ cbuffer CameraBuffer : register( cb0 ) {
 	float4x4 projectionMatrix;
 };
 
+Texture2D shaderTexture : register(t0);
+SamplerState MeshTextureSampler : register(s0);
+
 struct VOut
 {
     float4 position : SV_POSITION;
@@ -28,5 +31,6 @@ VOut VShader(float4 position : POSITION, float4 color : COLOR)
 
 float3 PShader(VOut input) : SV_TARGET
 {
-    return 1;
+	Texture2D test = shaderTexture;
+	return shaderTexture.Sample(MeshTextureSampler, input.color.xy*2).xyz;//diffuseTexture.Sample(float2(.5, .5));
 }
