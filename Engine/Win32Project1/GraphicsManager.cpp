@@ -366,3 +366,12 @@ void GraphicsManager::UpdateConstBuffer()
 }
 
 #pragma endregion Constants
+
+#pragma region Inputs
+
+void GraphicsManager::MoveCamera(D3DXVECTOR3 direction)
+{
+	camera->AddPosition(direction);
+}
+
+#pragma endregion Inputs

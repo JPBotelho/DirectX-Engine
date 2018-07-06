@@ -3,6 +3,7 @@
 #include <wrl\wrappers\corewrappers.h>
 #include <wrl\client.h>
 #include <stdio.h>
+#include <D3dx9math.h>
 
 using namespace ABI::Windows::Foundation;
 using namespace Microsoft::WRL;
@@ -23,4 +24,5 @@ class GraphicsManager
 		void UpdateConstBuffer();
 		float deltaTime;
 		float timeElapsed;
+		void MoveCamera(D3DXVECTOR3 direction);
 };

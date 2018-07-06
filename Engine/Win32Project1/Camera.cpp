@@ -20,6 +20,11 @@ Camera::~Camera()
 {
 }
 
+void Camera::AddPosition(D3DXVECTOR3 add)
+{
+	position += add;
+}
+
 void Camera::GetViewMatrix(D3DXMATRIX* viewMatrix)
 {
 	D3DXVECTOR3 up, pos, lookAt;

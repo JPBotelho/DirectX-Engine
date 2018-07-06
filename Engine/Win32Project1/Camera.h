@@ -11,9 +11,10 @@ public:
 	void GetProjectionMatrix(D3DXMATRIX*);
 	void GetWorldMatrix(D3DXMATRIX*);
 	void GetOrthoMatrix(D3DXMATRIX*);
+	void AddPosition(D3DXVECTOR3);
 private:
-	D3DVECTOR position;
-	D3DVECTOR rotation;
+	D3DXVECTOR3 position;
+	D3DXVECTOR3 rotation;
 	float nearPlane, farPlane;
 	float horFOV, vertFOV;
 

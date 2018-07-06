@@ -68,11 +68,6 @@ void WindowManager::DisplayWindow(HINSTANCE hInstance, int nCmdShow)
 									hInstance,    // handle
 									NULL);    // multiple windows
 
-	/*graphicsManager->InitD3D(hWnd);
-	graphicsManager->InitShaders(0);
-	graphicsManager->CreateVertBuffer();
-	graphicsManager->CreateConstBuffer();*/
-
 	HRESULT successful = graphicsManager->InitializeGraphics(hWnd);
 	if (FAILED(successful))
 	{
@@ -129,6 +124,26 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			if (wParam == VK_F5)
 			{
 				graphicsManager->InitShaders(1);
+			}
+			//A
+			if (wParam == 0x41)
+			{
+				graphicsManager->MoveCamera(D3DXVECTOR3(-.1, 0, 0));
+			}
+			//D
+			else if (wParam == 0x44)
+			{
+				graphicsManager->MoveCamera(D3DXVECTOR3(.1, 0, 0));
+			}
+			//W
+			if (wParam == 0x57)
+			{
+				graphicsManager->MoveCamera(D3DXVECTOR3(0, .1, 0));
+			}
+			//S
+			else if (wParam == 0x53)
+			{
+				graphicsManager->MoveCamera(D3DXVECTOR3(0, -.1, 0));
 			}
 			return 0;
 		}
