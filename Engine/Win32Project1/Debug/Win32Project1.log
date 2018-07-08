@@ -3,9 +3,11 @@ c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowm
   c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(13): note: command-line arguments:  see previous definition of '_UNICODE'
 c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(94): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(136): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
-c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(141): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
-c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(146): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
-c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(151): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(89): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(132): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(137): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(142): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(147): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(153): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
+c:\users\brigh\documents\github\local-peanut-engine\engine\win32project1\windowmanager.cpp(158): warning C4305: 'argument': truncation from 'double' to 'FLOAT'
   Win32Project1.vcxproj -> C:\Users\brigh\Documents\GitHub\local-peanut-engine\Engine\Debug\Win32Project1.exe

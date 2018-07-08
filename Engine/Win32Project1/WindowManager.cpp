@@ -22,7 +22,7 @@ float height = 1080;
 
 double oldTime;
 double newTime;
-
+double deltaTime;
 double GetTimeMS();
 
 GraphicsManager *graphicsManager = new GraphicsManager(width, height);
@@ -87,6 +87,7 @@ void WindowManager::DisplayWindow(HINSTANCE hInstance, int nCmdShow)
 		std::chrono::duration<float, std::milli> time_span = std::chrono::high_resolution_clock::now() - start_time;
 		(*graphicsManager).timeElapsed = time_span.count();
 		(*graphicsManager).deltaTime = (newTime - oldTime);
+		deltaTime = (newTime - oldTime);
 		
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -138,13 +139,25 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			//W
 			if (wParam == 0x57)
 			{
-				graphicsManager->MoveCamera(D3DXVECTOR3(0, .1, 0));
+				graphicsManager->MoveCamera(D3DXVECTOR3(0, 0, .1));
 			}
 			//S
 			else if (wParam == 0x53)
 			{
-				graphicsManager->MoveCamera(D3DXVECTOR3(0, -.1, 0));
+				graphicsManager->MoveCamera(D3DXVECTOR3(0, 0, -.1));
 			}
+			SHORT t = GetKeyState(VK_SHIFT);
+			//LShift
+			if(wParam == VK_SHIFT)
+			{
+				graphicsManager->MoveCamera(D3DXVECTOR3(0, .1, 0));
+			}
+			//LControl
+			else if (wParam == VK_CONTROL)
+			{
+				graphicsManager->MoveCamera(D3DXVECTOR3(0, -.10, 0));
+			}
+
 			return 0;
 		}
 		break;
