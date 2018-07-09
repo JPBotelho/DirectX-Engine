@@ -10,20 +10,20 @@ SamplerState MeshTextureSampler : register(s0);
 
 struct VOut
 {
-    float3 position : POSITION;
+    float4 position : SV_POSITION;
     float3 normal : NORMAL;
     float2 uv : TEXCOORD0;
 };
 
-VOut VShader(float3 position : POSITION0, float3 normal : NORMAL0, float2 uv : TEXCOORD0)
+VOut VShader(float4 position : POSITION, float3 normal : NORMAL, float2 uv : TEXCOORD0)
 {
     VOut output;
 	
-    output.position.xyz = mul(float4(position.xyz, 1), transpose(projectionMatrix)).xyz;
+    output.position = mul(float4(position.xyz, 1), transpose(projectionMatrix));
 	//output.position = position;
     output.normal = normal;
     //Position is in clip space.
-    output.uv = (position.xy + 1) / 2;
+	output.uv = uv;//(position.xy + 1) / 2;
 
     return output;
 }
@@ -31,6 +31,7 @@ VOut VShader(float3 position : POSITION0, float3 normal : NORMAL0, float2 uv : T
 
 float3 PShader(VOut input) : SV_TARGET
 {
+	float3 lightPos = float3(1, 10, 3);
 	Texture2D test = shaderTexture;
-	return 1;//shaderTexture.Sample(MeshTextureSampler, input.color.xy*2).xyz;//diffuseTexture.Sample(float2(.5, .5));
+	return dot(normalize(input.normal), normalize(input.position.xyz - lightPos));//shaderTexture.Sample(MeshTextureSampler, input.color.xy*2).xyz;//diffuseTexture.Sample(float2(.5, .5));
 }

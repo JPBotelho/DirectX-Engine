@@ -233,9 +233,9 @@ HRESULT GraphicsManager::InitShaders(bool clearLog)
 void GraphicsManager::RenderFrame()
 {
 	UpdateConstBuffer();
-	devcon->ClearRenderTargetView(backbuffer, D3DXCOLOR(255, 0, 238, 0));
+	devcon->ClearRenderTargetView(backbuffer, D3DXCOLOR(255, 255, 255, 0));
 
-	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//devcon->DrawIndexed(60,0, 0);
 	devcon->Draw(60, 0);
