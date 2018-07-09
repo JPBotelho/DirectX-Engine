@@ -158,6 +158,7 @@
     <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="ModelClass.h" />
+    <ClInclude Include="OBJ_Loader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="Win32Project1.h" />

@@ -54,8 +54,8 @@ ID3D11ShaderResourceView* texture = 0;
 D3D11_INPUT_ELEMENT_DESC ied[] =
 {
 	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "TEXCOORD0", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD0", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
 __declspec(align(16))
@@ -222,7 +222,7 @@ HRESULT GraphicsManager::InitShaders(bool clearLog)
 	dev->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &pixelShader);
 	devcon->VSSetShader(vertShader, 0, 0);
 	devcon->PSSetShader(pixelShader, 0, 0);
-	dev->CreateInputLayout(ied, 2, VS->GetBufferPointer(), VS->GetBufferSize(), &pLayout);
+	dev->CreateInputLayout(ied, 3, VS->GetBufferPointer(), VS->GetBufferSize(), &pLayout);
 	devcon->IASetInputLayout(pLayout);
 
 	return S_OK;
@@ -235,9 +235,9 @@ void GraphicsManager::RenderFrame()
 	UpdateConstBuffer();
 	devcon->ClearRenderTargetView(backbuffer, D3DXCOLOR(255, 0, 238, 0));
 
-	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-	devcon->Draw(4, 0);
+	devcon->Draw(24, 0);
 
 	//Present(0,0) for no VSync
 	swapchain->Present(1, 0);

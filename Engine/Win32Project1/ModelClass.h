@@ -16,6 +16,7 @@ class ModelClass
 		~ModelClass();
 		HRESULT InitializeBuffers(ID3D11Device*, ID3D11DeviceContext*, LogManager*);
 		HRESULT InitializeVertexBuffer(ID3D11Device*, ID3D11DeviceContext*, LogManager*);
+		HRESULT InitializeIndexBuffer(ID3D11Device*, ID3D11DeviceContext*, LogManager*);
 		
 };
 
