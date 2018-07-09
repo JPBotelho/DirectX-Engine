@@ -31,6 +31,7 @@ VOut VShader(float4 position : POSITION, float3 normal : NORMAL, float2 uv : TEX
 
 float3 PShader(VOut input) : SV_TARGET
 {
+	float3 lightPos = float3(1, 10, 3);
 	Texture2D test = shaderTexture;
-	return 1;//shaderTexture.Sample(MeshTextureSampler, input.color.xy*2).xyz;//diffuseTexture.Sample(float2(.5, .5));
+	return dot(normalize(input.normal), normalize(input.position.xyz - lightPos));//shaderTexture.Sample(MeshTextureSampler, input.color.xy*2).xyz;//diffuseTexture.Sample(float2(.5, .5));
 }

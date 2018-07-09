@@ -1,2 +1,2 @@
 Compiling shaders...
-Shader compilation successful.
+Shader compilation successful.Buffers didn't load.Buffers didn't load.

@@ -237,7 +237,8 @@ void GraphicsManager::RenderFrame()
 
 	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-	devcon->Draw(24, 0);
+	//devcon->DrawIndexed(60,0, 0);
+	devcon->Draw(60, 0);
 
 	//Present(0,0) for no VSync
 	swapchain->Present(1, 0);
