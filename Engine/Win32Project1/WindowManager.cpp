@@ -20,14 +20,7 @@ RECT bounds = { 0, 0, 1920, 1080 };
 float width = 1920;
 float height = 1080;
 
-double oldTime;
-double newTime;
-double deltaTime;
-double GetTimeMS();
-
 GraphicsManager *graphicsManager = new GraphicsManager(width, height);
-
-
 
 WindowManager::WindowManager()
 {
@@ -82,12 +75,10 @@ void WindowManager::DisplayWindow(HINSTANCE hInstance, int nCmdShow)
 
 	while (1)
 	{
-		oldTime = newTime;
-		newTime = GetTimeMS();
-		std::chrono::duration<float, std::milli> time_span = std::chrono::high_resolution_clock::now() - start_time;
+		
 		(*graphicsManager).timeElapsed = time_span.count();
 		(*graphicsManager).deltaTime = (newTime - oldTime);
-		deltaTime = (newTime - oldTime);
+
 		
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -167,7 +158,4 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-double GetTimeMS()
-{
-	return (double)std::time(0);
-}
+

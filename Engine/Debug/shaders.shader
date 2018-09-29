@@ -20,18 +20,15 @@ VOut VShader(float4 position : POSITION, float3 normal : NORMAL, float2 uv : TEX
     VOut output;
 	
     output.position = mul(float4(position.xyz, 1), transpose(projectionMatrix));
-	//output.position = position;
     output.normal = normal;
-    //Position is in clip space.
-	output.uv = uv;//(position.xy + 1) / 2;
-
+	output.uv = uv;
     return output;
 }
 
 
 float3 PShader(VOut input) : SV_TARGET
 {
-	float3 lightPos = float3(1, 10, 3);
-	Texture2D test = shaderTexture;
-	return dot(normalize(input.normal), normalize(input.position.xyz - lightPos));//shaderTexture.Sample(MeshTextureSampler, input.color.xy*2).xyz;//diffuseTexture.Sample(float2(.5, .5));
+	float3 lightPos = float3(-100, 10000, -100);
+	float3 lightdir = normalize(input.position.xyz - lightPos);
+	return max(0, dot((input.normal), lightdir)) * float3(1, 0, 0);
 }

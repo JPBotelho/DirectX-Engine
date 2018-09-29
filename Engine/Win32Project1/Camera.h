@@ -1,3 +1,7 @@
+/*
+ * Class to create matrices used for rendering based on position and rotation.
+ */
+
 #pragma once
 #include <d3d11.h>
 #include <d3dx10math.h>

@@ -18,14 +18,11 @@
 
 #include <D3DCompiler.h>
 
-
-
-
 LogManager *logger = new LogManager();
 
-IDXGISwapChain *swapchain;  // the pointer to the swap chain interface
-ID3D11Device *dev;          // the pointer to our Direct3D device interface
-ID3D11DeviceContext *devcon;// the pointer to our Direct3D device context
+IDXGISwapChain *swapchain;
+ID3D11Device *dev;
+ID3D11DeviceContext *devcon;
 
 ID3D11RenderTargetView *backbuffer;
 
@@ -39,8 +36,8 @@ ID3D11PixelShader *pixelShader;
 
 struct VERTEX
 {
-	FLOAT X, Y, Z;      // position
-	D3DXCOLOR Color;    // color
+	FLOAT X, Y, Z;
+	D3DXCOLOR Color;
 };
 
 ID3D11Buffer *constBuffer;
@@ -237,7 +234,7 @@ void GraphicsManager::RenderFrame()
 
 	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	//devcon->DrawIndexed(60,0, 0);
+	//Should not be hardcoded
 	devcon->Draw(600, 0);
 
 	//Present(0,0) for no VSync

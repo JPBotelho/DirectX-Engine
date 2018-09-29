@@ -1,3 +1,7 @@
+/*
+ * Loads a texture from a file (in this case, .dds)
+ */
+
 #pragma once
 #include <d3d11.h>
 #include <d3dx11tex.h>
