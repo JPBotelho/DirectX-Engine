@@ -1,6 +1,6 @@
 Engine/ipch/
 Engine/Debug/
-Engine/Engine.VC/
+Engine/Engine.VC.db
 Engine/Win32Project1/Debug/
 Engine/Win32Project1/Release/
 Engine/.vs/
