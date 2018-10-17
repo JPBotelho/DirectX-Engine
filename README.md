@@ -12,6 +12,7 @@ Here's what I implemented and is available in this repository:
   - Vertex/index buffer
   - Vertex/fragment shader loading from file (using D3D functions)
   - Logging to file
+  - Obj2World/Projection matrices
   
 Here's what's included but was not implemented by me:
   [.Obj Model loader [MIT License]](https://github.com/Bly7/OBJ-Loader)
